@@ -6,26 +6,47 @@ import javax.swing.*;
 
 public class Main {
     public static void main(String[] args) {
-        String[] tools = {
+        final String[] tools = {
                 "Conversor de Monedas", "Conversor de Medidas",
         };
 
         ConversorMonedas convMonedas = new ConversorMonedas();
 
-        String toolSelection = (String) JOptionPane.showInputDialog(
+        boolean flag = true;
+        while (flag) {
+            String toolSelection = (String) JOptionPane.showInputDialog(
+                    null,
+                    "Bienvenido!\nSeleccione un tipo de Conversor:",
+                    "MultiConversor - Menú Principal",
+                    JOptionPane.PLAIN_MESSAGE,
+                    null,
+                    tools,
+                    0
+            );
+
+            switch (toolSelection) {
+                case "Conversor de Monedas":
+                    convMonedas.convertirMonedas();
+            }
+
+            int choice = JOptionPane.showConfirmDialog(
+                    null,
+                    "¿Desea realizar otra operación?",
+                    "Multiconversor - Menú Principal",
+                    JOptionPane.YES_NO_OPTION,
+                    JOptionPane.QUESTION_MESSAGE,
+                    null
+                    );
+
+            flag = choice == 0;
+        }
+
+        JOptionPane.showMessageDialog(
                 null,
-                "Bienvenido!\nSeleccione un tipo de Conversor:",
-                "MultiConversor - Menú Principal",
-                JOptionPane.PLAIN_MESSAGE,
-                null,
-                tools,
+                "Gracias, vuelva prontos!",
+                "Multiconversor - Adios!",
                 0
         );
-
-        switch (toolSelection) {
-            case "Conversor de Monedas":
-                convMonedas.convertirMonedas();
-        }
 
     }
 }

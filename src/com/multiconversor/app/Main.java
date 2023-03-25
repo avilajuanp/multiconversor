@@ -4,6 +4,8 @@ import com.multiconversor.conversoresMonedas.ConversorMonedas;
 
 import javax.swing.*;
 
+import static com.multiconversor.utils.Utils.salir;
+
 public class Main {
     public static void main(String[] args) {
         final String[] tools = {
@@ -23,6 +25,7 @@ public class Main {
                     tools,
                     0
             );
+            if (toolSelection == null) salir();
 
             switch (toolSelection) {
                 case "Conversor de Monedas":
@@ -40,13 +43,6 @@ public class Main {
 
             flag = choice == 0;
         }
-
-        JOptionPane.showMessageDialog(
-                null,
-                "Gracias, vuelva prontos!",
-                "Multiconversor - Adios!",
-                0
-        );
-
+        salir();
     }
 }

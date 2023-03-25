@@ -4,11 +4,13 @@ import javax.swing.*;
 import java.util.HashMap;
 import java.util.Map;
 
+import static com.multiconversor.utils.Utils.pedirMonto;
+
 public class ConversorMonedas {
 
     final String[] tiposCambio = {
-            "ARS a USD", "ARS a EUR", "ARS a CLP",
-            "USD a ARS", "EUR a ARS", "CLP a ARS"
+            "ARS a USD", "ARS a EUR", "ARS a GBP", "ARS a CLP",
+            "USD a ARS", "EUR a ARS", "GBP a ARS", "CLP a ARS"
     };
 
     private final Map<String, Double> tasasDeCambio = new HashMap<>();
@@ -17,6 +19,7 @@ public class ConversorMonedas {
         // tasas en referencia a USD (el conversor convierte primero a Usd y luego a la moneda solicitada)
         tasasDeCambio.put("USD", 1.00); // 1usd = 1usd
         tasasDeCambio.put("EUR", 1.09); // 1usd = 0.92eur
+        tasasDeCambio.put("GBP", 1.22); // 1usd = 0.82gbp
         tasasDeCambio.put("ARS", 0.0026); // 1usd = 391ars
         tasasDeCambio.put("CLP", 0.0012); // 1usd = 810clp
 
@@ -33,29 +36,18 @@ public class ConversorMonedas {
         double monto = pedirMonto();
 
         switch (tipoCambio) {
-            case "ARS a USD":
-                convertir(monto,"ARS","USD");
-                break;
-            case "ARS a EUR":
-                convertir(monto,"ARS","EUR");
-                break;
-            case "ARS a CLP":
-                convertir(monto,"ARS","CLP");
-                break;
-            case "USD a ARS":
-                convertir(monto,"USD","ARS");
-                break;
-            case "EUR a ARS":
-                convertir(monto,"EUR","ARS");
-                break;
-            case "CLP a ARS":
-                convertir(monto,"CLP","ARS");
-                break;
-            default:
-                JOptionPane.showMessageDialog(
-                        null,
-                        "Opción en construcción."
-                );
+            case "ARS a USD" -> convertir(monto, "ARS", "USD");
+            case "ARS a EUR" -> convertir(monto, "ARS", "EUR");
+            case "ARS a GBP" -> convertir(monto, "ARS", "GBP");
+            case "ARS a CLP" -> convertir(monto, "ARS", "CLP");
+            case "USD a ARS" -> convertir(monto, "USD", "ARS");
+            case "EUR a ARS" -> convertir(monto, "EUR", "ARS");
+            case "GBP a ARS" -> convertir(monto, "GBP", "ARS");
+            case "CLP a ARS" -> convertir(monto, "CLP", "ARS");
+            default -> JOptionPane.showMessageDialog(
+                    null,
+                    "Opción en construcción."
+            );
         }
     }
 
@@ -103,37 +95,4 @@ public class ConversorMonedas {
         );
     }
     */
-
-    double pedirMonto() {
-        String monto;
-        do {
-            monto = JOptionPane.showInputDialog(
-               null,
-               "Ingrese el monto a convertir:",
-               "Conversor de Monedas",
-               JOptionPane.PLAIN_MESSAGE
-            );
-        } while (!validarMonto(monto));
-        return Double.parseDouble(monto);
-    }
-
-    static boolean validarMonto (String monto) {
-        try {
-            double x = Double.parseDouble(monto);
-            if (x<=0){
-                JOptionPane.showMessageDialog(
-                        null,
-                        "ingrese un monto positivo!"
-                );
-                return false;
-            }
-            return true;
-        } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(
-                    null,
-                    "ingrese un monto correcto!"
-            );
-            return false;
-        }
-    }
 }
